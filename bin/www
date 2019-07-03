@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+const app = require('../app');
+const conf = require('../config');
+
+app.set('port', process.env.PORT || conf.get('server:port'));
+
+app.listen(app.get('port'));

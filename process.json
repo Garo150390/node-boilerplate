@@ -1,0 +1,8 @@
+{
+  "apps" : [{
+    "name"        : "node-boilerpalte",
+    "script"      : "./bin/www",
+    "watch"       : "./",
+    "exec_mode"   : "cluster"
+  }]
+}
