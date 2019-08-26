@@ -1,6 +1,8 @@
 require('dotenv').config();
 const logger = require('morgan');
 const express = require('express');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
@@ -17,6 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
+
+app.use(passport.initialize());
 
 app.use(RS.parseQuery);
 
