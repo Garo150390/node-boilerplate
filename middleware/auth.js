@@ -1,45 +1,46 @@
-const jwt = require('jsonwebtoken');
-
-const UserDAO = require('../components/users/private/dao');
-const conf = require('../config');
-
-const secret = process.env.JWT_SECRET || conf.get('jwr:secret');
+const response = require('../helpers/http/response');
 
 class Authorization {
-  static authorizeRequest(access) {
+  static permit(access) {
     return (req, res, next) => {
-      if (access === 'editor') {
+      const status = response.status.FORBIDDEN;
+      const { user } = req;
+
+      if (!user) {
+        const data = response.dispatch({
+          error: req.message || 'Permission denied',
+          code: req.code || status,
+        });
+        return res.status(status).json(data);
+      }
+
+      // admin part
+      if (user.role === 'admin') {
         return next();
       }
-      const authHeader = req.get('authorization');
-      if (!authHeader) {
-        return res.status(401).json({ message: 'token not provided' });
+
+      if (access === 'admin') {
+        const data = response.dispatch({
+          error: req.message || 'Permission denied',
+          code: req.code || status,
+        });
+        return res.status(status).json(data);
       }
-      const token = authHeader.replace('Bearer ', '');
-      let payload;
-      try {
-        payload = jwt.verify(token, secret);
-        if (payload.type !== conf.get('jwt:tokens:access:type')) {
-          return res.status(400).json({ message: 'invalid token!' });
-        }
-      } catch (error) {
-        if (error instanceof jwt.TokenExpiredError) {
-          return res.status(401).json({ message: 'Token expired!' });
-        }
-        return res.status(401).json(error);
+
+      // editor part
+      if (user.role === 'editor') {
+        return next();
       }
-      return UserDAO.fetchOne({ _id: payload.userId })
-        .then((user) => {
-          if (!user) {
-            return res.status(400).json({ message: 'access denied: invalid token' });
-          }
-          req.user = user;
-          if (access === 'admin' && user.role !== 'admin') {
-            return res.status(403).json({ message: 'permission denied' });
-          }
-          return next();
-        })
-        .catch(err => res.json(err));
+
+      if (access === 'editor') {
+        const data = response.dispatch({
+          error: req.message || 'Permission denied',
+          code: req.code || status,
+        });
+        return res.status(status).json(data);
+      }
+
+      return next();
     };
   }
 }

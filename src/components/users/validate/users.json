@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 90
+    },
+    "surname": { "type": "string" },
+    "password": {
+      "type": "string",
+      "minLength": 6
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "subscribe": {
+      "type": "boolean"
+    },
+    "role": {
+      "type": "string",
+      "enum": ["editor", "admin", "user"]
+    }
+  },
+  "required": ["name", "password", "email"]
+}

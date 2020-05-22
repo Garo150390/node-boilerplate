@@ -15,15 +15,18 @@ const status = Object.freeze({
 const dispatch = (obj) => {
   const defaults = {
     success: true,
-    data: {},
+    data: null,
     error: null,
-    set error(value) {
-      this.success = false;
-    },
   };
+
+  if (obj.error || obj.errors) {
+    defaults.success = false;
+    if (obj.errors) delete defaults.error;
+  }
 
   return {
     ...defaults,
+    code: status.OK,
     ...obj,
   };
 };

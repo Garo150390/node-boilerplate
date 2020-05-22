@@ -1,0 +1,88 @@
+{
+  "db": {
+    "development": {
+      "database": "db_name_dev",
+      "host": "localhost",
+      "port": "27017",
+      "use_env_variable": false,
+      "options": {
+        "useNewUrlParser": true,
+        "useCreateIndex": true,
+        "useUnifiedTopology": true
+      },
+      "debug": true
+    },
+    "test": {
+      "database": "db_name-test",
+      "host": "localhost",
+      "port": "27017",
+      "use_env_variable": "DB_TEST",
+      "options": {
+        "useNewUrlParser": true,
+        "useCreateIndex": true,
+        "useUnifiedTopology": true
+      }
+    },
+    "production": {
+      "database": "db_name",
+      "host": "localhost",
+      "port": "27017",
+      "use_env_variable": "DB",
+      "options": {
+        "useNewUrlParser": true,
+        "useCreateIndex": true
+      }
+    }
+  },
+  "query": {
+    "limit_min": 1,
+    "limit_max": 100,
+    "limit_default": 20,
+    "offset_min": 0,
+    "offset_default": 0
+  },
+  "access": {
+    "guest": 1,
+    "user": 2,
+    "editor": 3,
+    "admin": 4
+  },
+  "jwt": {
+    "secret": "your_secret",
+    "tokens": {
+      "access": {
+        "type": "access",
+        "expiresIn": "1h"
+      },
+      "refresh": {
+        "type": "refresh",
+        "expiresIn": "3h"
+      }
+    }
+  },
+  "salt": "sfssdfsdfds",
+  "default_lang": "en",
+  "storagePaths": {
+    "users": "public/images/users"
+  },
+  "redis": {
+    "port": 6379,
+    "host": "127.0.0.1",
+    "db": 0,
+    "showFriendlyErrorStack": true
+  },
+  "mailer": {
+    "transporter": {
+      "service": "gmail",
+      "direct": true,
+      "host": "smtp.gmail.com",
+      "port": 587,
+      "auth": {
+        "user": "test",
+        "pass": "test"
+      },
+      "secure": false
+    },
+    "from": "APP ✔ <test>"
+  }
+}

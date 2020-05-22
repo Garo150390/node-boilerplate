@@ -1,8 +1,47 @@
-#!/usr/bin/env node
+const http = require('http');
+const logger = require('../lib/logger');
 
 const app = require('../app');
-const conf = require('../config');
+const nconf = require('../config');
+const socket = require('../socket.io');
 
-app.set('port', process.env.PORT || conf.get('server:port'));
+app.set('port', nconf.get('PORT') || nconf.get('server:port'));
 
-app.listen(app.get('port'));
+const server = http.createServer(app);
+server.listen(app.get('port'));
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  const bind = typeof port === 'string'
+    ? `Pipe ${app.get('port')}`
+    : `Port ${app.get('port')}`;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      logger.error('%s requires elevated privileges', bind);
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      logger.error('%s is already in use', bind);
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string'
+    ? `pipe ${addr}`
+    : `port ${addr.port}`;
+  logger.debug('Server listening on %s', bind);
+  socket(server);
+}
+
+server.on('error', onError);
+server.on('listening', onListening);

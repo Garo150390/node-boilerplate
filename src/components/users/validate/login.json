@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "password": { "type": "string" },
+    "email": {
+      "type": "string",
+      "format": "email"
+    }
+  },
+  "required": ["email", "password"]
+}

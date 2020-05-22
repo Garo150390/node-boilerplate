@@ -13,8 +13,7 @@
                 "message": "Unexpected property on console object was called"
             }
         ],
-        "no-underscore-dangle": ["error", { "allow": ["_id", "_context"], "allowAfterThis": true }],
-        "no-param-reassign": ["error", { "props": false }],
+        "no-underscore-dangle": ["error", { "allow": ["_id", "__v", "_doc"], "allowAfterThis": true }],
         "prefer-promise-reject-errors": ["error", {"allowEmptyReject": true}],
         "max-len": ["error", { "code": 500 }]
     }

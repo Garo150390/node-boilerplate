@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "deleted": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2
+    },
+    "surname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "role": {
+      "type": "string",
+      "enum": ["admin", "editor", "user"]
+    },
+    "subscribe": {
+      "type": "boolean"
+    },
+    "image": { "type": "string" },
+    "password": {
+      "type": "string",
+      "minLength": 6
+    }
+  }
+}

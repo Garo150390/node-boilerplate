@@ -1,8 +1,11 @@
 {
   "apps" : [{
-    "name"        : "node-boilerpalte",
-    "script"      : "./bin/www",
-    "watch"       : "./",
-    "exec_mode"   : "cluster"
+    "name"         : "node-boilerpalte",
+    "script"       : "./bin/www",
+    "watch"        : "./",
+    "ignore_watch" : ["node_modules", "public", "log"],
+    "instances"    : 1,
+    "instance_var" : "INSTANCE_ID",
+    "exec_mode"    : "cluster"
   }]
 }
